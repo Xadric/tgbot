@@ -12,11 +12,11 @@ bot.launch()
 bot.use(session())
 bot.command('new',async (ctx)=>{
     ctx.session=INITIAL_SESSION
-    await ctx.reply('I`m waiting')
+    await ctx.reply('I`m waiting!!!')
 })
 bot.command('start',async (ctx)=>{
     ctx.session=INITIAL_SESSION
-    await ctx.reply('I`m waiting')
+    await ctx.reply('I`m waiting!!!')
 })
 bot.on(message("voice"),async ctx=>{
     ctx.session??=INITIAL_SESSION
