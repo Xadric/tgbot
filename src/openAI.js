@@ -9,27 +9,27 @@ class OpenAI {
         this.openai = new OpenAIApi(configuration);
     }
 
-    async chat(messages){
+    async chat(messages) {
         try {
-            const response= await this.openai.createChatCompletion({
-                model:'gpt-3.5-turbo',
-                messages
+            const response = await this.openai.createChatCompletion({
+                model: 'gpt-3.5-turbo',
+                messages,
             })
             return response.data.choices[0].message
-        }catch (e) {
-            console.error("e")
+        } catch (e) {
+            console.log('Error while gpt chat', e.message)
         }
     }
 
-    async transcription(filepath){
+    async transcription(filepath) {
         try {
             const response = await this.openai.createTranscription(
                 createReadStream(filepath),
                 'whisper-1'
             )
             return response.data.text
-        }catch (e) {
-            console.error(e.message)
+        } catch (e) {
+            console.log('Error while transcription', e.message)
         }
     }
 }
