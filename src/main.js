@@ -18,6 +18,20 @@ bot.command('start',async (ctx)=>{
     ctx.session=INITIAL_SESSION
     await ctx.reply('I`m waiting!!!')
 })
+bot.on(message("text"), async ctx=>{
+    ctx.session??=INITIAL_SESSION
+    try {
+        await ctx.reply(code('Запрос прийнял, обработка'))
+        const text = ctx.message.text
+        await ctx.reply(code(`Ваш текст:${text}`))
+        ctx.session.messages.push({role:'user',content:text})
+        const response = await openai.chat(ctx.session.messages)
+        ctx.session.messages.push({role:'assistant',content:response.content})
+        await ctx.reply(response.content)
+    }catch (e) {
+        console.error("Error",e.message)
+    }
+})
 bot.on(message("voice"),async ctx=>{
     ctx.session??=INITIAL_SESSION
     try {
